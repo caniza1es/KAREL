@@ -1,76 +1,47 @@
 import turtle
-
 #iniciando ventana
-ventana = turtle.Screen()
-ventana.setup(1000,1000)
+turtle.Screen()
+turtle.title("KAREL")
+turtle.setup(1000,1000)
 
 #ancho=30
-
 karel = turtle.Turtle()
-karel.speed(1000)
-
-karel.up()
+karel.speed(0)
 karel.sety(-450)
-karel.down()
 
-#Funcion para dibujar las lineas horizontales
-def lineaHorizontal(grid,numlinea):
-  grid.penup()
-  grid.setx(-450)
-  grid.down()
-  grid.write(numlinea)
-  grid.setx(450)
-
-#Funcion para dibujar las lineas verticales
-def lineaVertical(grid,num2linea):
-  grid.penup()
-  grid.sety(-450)
-  grid.down()
-  if num2linea==30:
-    pass
+#Funcion para lineas horizontales/Verticales
+def hacerLinea(grid,numlinea,modo):
+  grid.pd()
+  if modo == 'h': 
+   grid.setx(-450)
+   grid.write(numlinea)
+   grid.setx(450)
   else:
-    grid.write(num2linea)
-  grid.sety(450)
-
-#Se hace la gráfica
-contadorHorizontal = 0
-y=-450
-while contadorHorizontal != 31:
-  lineaHorizontal(karel,contadorHorizontal)
-  y+=30
+   grid.sety(-450)
+   grid.write(numlinea)
+   grid.sety(450)
+#Hacer lineas horizontales
+contadorLi = 0
+while contadorLi != 31:
+  hacerLinea(karel,contadorLi,'h')
   karel.up()
-  karel.sety(y)
-  karel.down()
-  contadorHorizontal+=1
+  karel.sety(karel.ycor()+30)
+  contadorLi+=1
 
-karel.up()
+#Karel vuelve a la posicion inicial
 karel.goto(-450,-450)
-karel.down()
 
-contadorVertical = 0
-x=-450
-while contadorVertical != 31:
-  lineaVertical(karel,contadorVertical)
-  x+=30
+#Hacer lineas verticales
+contadorLi = 0
+while contadorLi != 31:
+  hacerLinea(karel,contadorLi,"")
   karel.up()
-  karel.setx(x)
-  karel.down()
-  contadorVertical+=1
+  karel.setx(karel.xcor()+30)
+  contadorLi+=1
 
-#Karel se devulve a la posición inicial para comenzar con el dibujo del mapa
-karel.up()
-karel.goto(-450,-450)
-karel.down()
-
-
-#funcion para darle coordenadas a karel con coordenadas del pllano cartesiano
+#funcion para ubicar a objetos con coordenadas del plano cartesiano
 def coordenadas(x,y,ka):
-  ka.up()
-  cordx=-450+(x*30)
-  cordy=-450+(y*30)
-  ka.goto(cordx,cordy)
-  ka.down()
+  ka.goto(-450+(x*30),-450+(y*30))
 
-coordenadas(15,4,karel)
-
+coordenadas(15,15,karel)
 turtle.done()
