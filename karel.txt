@@ -1,21 +1,18 @@
 BEGINNING-OF-PROGRAM
-DEFINE-NEW-INSTRUCTION turnright AS
-turnleft;
-turnleft;
-turnleft;
-END;
-DEFINE-NEW-INSTRUCTION square AS
-turnright;
-move;
-turnright;
-move;
-turnright;
-move;
-turnright;
-move;
-END;
 BEGINNING-OF-EXECUTION
-square;
+move;
+pickbeeper;
+move;
+pickbeeper;
+turnleft;
+turnleft;
+move;
+move;
+turnleft;
+turnleft;
+putbeeper;
+move;
+putbeeper;
 turnoff
 END-OF-EXECUTION
 END-OF-PROGRAM

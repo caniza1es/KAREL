@@ -41,27 +41,66 @@ while contadorLi != 31:
   contadorLi+=1
 
 #funcion para ubicar a objetos con coordenadas del plano cartesiano
+def sacar_las_coordenadas(x,y):
+  return (x,y)
 def coordenadas(x,y,ka):
   ka.goto(-450+(x*30),-450+(y*30))
-  
-coordenadas(20,20,karel)
-karel.speed(1)
-karel.color("red")
-karel.down()
-  
+
+karel.up()
+numeroBeepers = lector.pedirBeepers()
+beepers = []
+for i in range(numeroBeepers):
+  x = int(input("corx: "))
+  y = int(input("cory: "))
+  beep = lector.Beepers(x,y)
+  beepers.append(beep)
+  coordenadas(x,y,beepers[i].turtlee)
+
 #funcion que ejecuta las intrucciones
+mochila = int(input("beepers en mochila: "))
 def archivo_ejecucion(instruccion):
     if instruccion == "move;":
-        karel.forward(90)
+        karel.forward(30)
     elif instruccion == "turnleft;":
         karel.left(90)
     elif instruccion in definiciones:
         for nLine in program[definiciones[definiciones.index(instruccion)+1]:definiciones[definiciones.index(instruccion)+2]]:
             archivo_ejecucion(nLine)
+    elif instruccion == "pickbeeper;":
+      #cx=karel.corx()
+      #cy=karel.cory()
+      for i in beepers:
+        if karel.xcor() == i.turtlee.xcor() and karel.ycor() == i.turtlee.ycor() and i.turtlee.isvisible():
+          global mochila
+          mochila += 1
+          i.turtlee.hideturtle()
+          print(mochila)
+          break;
+    elif instruccion == "putbeeper;":
+      if mochila>0:
+        beeperPuesto = lector.Beepers(karel.xcor(),karel.ycor())
+        beeperPuesto.turtlee.setx(karel.xcor())
+        beeperPuesto.turtlee.sety(karel.ycor())
+        beeperPuesto.turtlee.shape("square")
+        beeperPuesto.turtlee.color("green")
+        beepers.append(beeperPuesto)
+        mochila-=1
+      else:
+        print("No tiene beepers para poner.")
+        #turnoff
+
+
+posxinicial = int(input("posicion x inicial: "))
+posyinicial = int(input("pos y inicial: "))
+
 
 #se empieza a leer el programa
 while True:
-    try:
+  coordenadas(posxinicial,posyinicial,karel)
+  karel.speed(1)
+  karel.color("red")
+  karel.down()
+  try:
         program = lector.archivo_a_lista()
         #se revisa PROGRAM
         if program[0] != "BEGINNING-OF-PROGRAM" or program[-1] != "END-OF-PROGRAM":
@@ -75,16 +114,15 @@ while True:
                 try:#inicia la ejecucion, en caso de error es porque no logra indexar el turnoff
                    for linee in program[program.index("BEGINNING-OF-EXECUTION"):program.index("turnoff")]:
                        archivo_ejecucion(linee)
+                   a = input("presione cualquier tecla para continuar")
+                   karel.up()
                 except:
                     print("error en turnoff")
         except:
             print("error en EXECUTION")
-    except:
+  except:
         print("No se encontro el archivo-saliendo.")
         exit()
         break
         
-#ejecucion instruccion
-
-
 turtle.done()
