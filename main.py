@@ -41,22 +41,30 @@ while contadorLi != 31:
   contadorLi+=1
 
 #funcion para ubicar a objetos con coordenadas del plano cartesiano
-def sacar_las_coordenadas(x,y):
-  return (x,y)
 def coordenadas(x,y,ka):
   ka.goto(-450+(x*30),-450+(y*30))
 
 karel.up()
-mochila = int(input("beepers en mochila: "))
-temp = mochila
-numeroBeepers = lector.pedirBeepers()
+
 beepers = []
+numeroBeepers = lector.pedirBeepers()
 for i in range(numeroBeepers):
   x = int(input("corx: "))
   y = int(input("cory: "))
   beep = lector.Beepers(x,y)
+  beep.turtlee.speed(3)
   beepers.append(beep)
   coordenadas(x,y,beepers[i].turtlee)
+  
+mochila = int(input("beepers en mochila: "))
+temp = mochila
+for i in range(mochila):
+  beep = lector.Beepers(-1, -1)
+  beep.turtlee.speed(3)
+  coordenadas(beep.x, beep.y, beep.turtlee)
+  beepers.append(beep)
+
+
 
 #funcion que ejecuta las intrucciones
 def archivo_ejecucion(instruccion):
@@ -68,25 +76,19 @@ def archivo_ejecucion(instruccion):
         for nLine in program[definiciones[definiciones.index(instruccion)+1]:definiciones[definiciones.index(instruccion)+2]]:
             archivo_ejecucion(nLine)
     elif instruccion == "pickbeeper;":
-      #cx=karel.corx()
-      #cy=karel.cory()
       for i in beepers:
-        if karel.xcor() == i.turtlee.xcor() and karel.ycor() == i.turtlee.ycor() and i.turtlee.isvisible():
+        if int(karel.xcor()) == i.turtlee.xcor() and int(karel.ycor()) == i.turtlee.ycor():
           global mochila
           mochila += 1
-          i.turtlee.hideturtle()
+          coordenadas(-1, -1, i.turtlee)
           break;
     elif instruccion == "putbeeper;":
       if mochila>0:
-        beeperPuesto = lector.Beepers(karel.xcor(),karel.ycor())
-        beeperPuesto.turtlee.ht()
-        beeperPuesto.turtlee.setx(karel.xcor())
-        beeperPuesto.turtlee.sety(karel.ycor())
-        beeperPuesto.turtlee.st()
-        beeperPuesto.turtlee.shape("square")
-        beeperPuesto.turtlee.color("green")
-        beepers.append(beeperPuesto)
-        mochila-=1
+         for i in beepers:
+             if i.turtlee.xcor() == -480:
+                 i.turtlee.goto(karel.xcor(),karel.ycor())
+                 mochila-=1
+                 break;
       else:
         print("No tiene beepers para poner.")
         #turnoff
@@ -104,6 +106,11 @@ while True:
   karel.speed(1)
   karel.color("red")
   karel.down()
+  for i in beepers:
+      coordenadas(i.x, i.y, i.turtlee)
+      if i.x != -1 and i.y != -1:
+          i.turtlee.st()
+      
   try:
         program = lector.archivo_a_lista()
         #se revisa PROGRAM
@@ -119,8 +126,7 @@ while True:
                    for linee in program[program.index("BEGINNING-OF-EXECUTION"):program.index("turnoff")]:
                        archivo_ejecucion(linee)
                    karel.up()
-                   a = input("")
-                   
+                   a = input("presione cualquier tecla para volver a parametros de lanzamiento")
                 except:
                     print("error en turnoff")
         except:
