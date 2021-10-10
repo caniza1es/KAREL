@@ -47,6 +47,8 @@ def coordenadas(x,y,ka):
   ka.goto(-450+(x*30),-450+(y*30))
 
 karel.up()
+mochila = int(input("beepers en mochila: "))
+temp = mochila
 numeroBeepers = lector.pedirBeepers()
 beepers = []
 for i in range(numeroBeepers):
@@ -57,7 +59,6 @@ for i in range(numeroBeepers):
   coordenadas(x,y,beepers[i].turtlee)
 
 #funcion que ejecuta las intrucciones
-mochila = int(input("beepers en mochila: "))
 def archivo_ejecucion(instruccion):
     if instruccion == "move;":
         karel.forward(30)
@@ -74,13 +75,14 @@ def archivo_ejecucion(instruccion):
           global mochila
           mochila += 1
           i.turtlee.hideturtle()
-          print(mochila)
           break;
     elif instruccion == "putbeeper;":
       if mochila>0:
         beeperPuesto = lector.Beepers(karel.xcor(),karel.ycor())
+        beeperPuesto.turtlee.ht()
         beeperPuesto.turtlee.setx(karel.xcor())
         beeperPuesto.turtlee.sety(karel.ycor())
+        beeperPuesto.turtlee.st()
         beeperPuesto.turtlee.shape("square")
         beeperPuesto.turtlee.color("green")
         beepers.append(beeperPuesto)
@@ -96,7 +98,9 @@ posyinicial = int(input("pos y inicial: "))
 
 #se empieza a leer el programa
 while True:
+  mochila = temp
   coordenadas(posxinicial,posyinicial,karel)
+  karel.seth(0)
   karel.speed(1)
   karel.color("red")
   karel.down()
@@ -114,8 +118,9 @@ while True:
                 try:#inicia la ejecucion, en caso de error es porque no logra indexar el turnoff
                    for linee in program[program.index("BEGINNING-OF-EXECUTION"):program.index("turnoff")]:
                        archivo_ejecucion(linee)
-                   a = input("presione cualquier tecla para continuar")
                    karel.up()
+                   a = input("")
+                   
                 except:
                     print("error en turnoff")
         except:
