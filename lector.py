@@ -11,11 +11,15 @@ class Beepers:
   
 
 def pedirBeepers():
-  try:
-    numero = int(input("Digite numero beepers: "))
-  except:
-    print("Debe ingresar un entero positivo")
-  return numero
+    beepersN = int(input("Digite numero beepers: "))
+    return beepersN
+
+def pedirParedesV():
+    paredesV = int(input("numero paredes verticales: "))
+    return paredesV
+def pedirParedesH():
+    paredesH = int(input("numero paredes horizontales: "))
+    return paredesH
 
 def archivo_a_lista():
 	#convierte el archivo a una lista de strings sin espacios

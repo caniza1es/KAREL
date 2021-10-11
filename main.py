@@ -45,7 +45,30 @@ def coordenadas(x,y,ka):
   ka.goto(-450+(x*30),-450+(y*30))
 
 karel.up()
+paredes = []
+paredesVerticales = lector.pedirParedesV()
+for i in range(paredesVerticales):
+  x = int(input("corx: "))
+  y = int(input("cory: "))
+  size = int(input("tamaño: "))
+  for unidad in range(size):
+    pared = lector.Beepers(x,y)
+    pared.turtlee.color("black")
+    paredes.append(pared)
+    coordenadas(x,y,pared.turtlee)
+    y+=1
 
+paredesHorizontales = lector.pedirParedesH()
+for i in range(paredesHorizontales):
+  x = int(input("corx: "))
+  y = int(input("cory: "))
+  size = int(input("tamaño: "))
+  for unidad in range(size):
+    pared = lector.Beepers(x,y)
+    pared.turtlee.color("black")
+    paredes.append(pared)
+    coordenadas(x,y,pared.turtlee)
+    x+=1
 beepers = []
 numeroBeepers = lector.pedirBeepers()
 for i in range(numeroBeepers):
@@ -70,6 +93,10 @@ for i in range(mochila):
 def archivo_ejecucion(instruccion):
     if instruccion == "move;":
         karel.forward(30)
+        for i in paredes:
+          if  int(karel.xcor()) == i.turtlee.xcor() and int(karel.ycor()) == i.turtlee.ycor():
+            print("karel ha chocado")
+            return -1
     elif instruccion == "turnleft;":
         karel.left(90)
     elif instruccion in definiciones:
@@ -81,7 +108,9 @@ def archivo_ejecucion(instruccion):
           global mochila
           mochila += 1
           coordenadas(-1, -1, i.turtlee)
-          break;
+          return
+        print("no hay beepers que recoger")
+        return -1
     elif instruccion == "putbeeper;":
       if mochila>0:
          for i in beepers:
@@ -91,7 +120,7 @@ def archivo_ejecucion(instruccion):
                  break;
       else:
         print("No tiene beepers para poner.")
-        #turnoff
+        return -1
 
 
 posxinicial = int(input("posicion x inicial: "))
@@ -108,9 +137,7 @@ while True:
   karel.down()
   for i in beepers:
       coordenadas(i.x, i.y, i.turtlee)
-      if i.x != -1 and i.y != -1:
-          i.turtlee.st()
-      
+         
   try:
         program = lector.archivo_a_lista()
         #se revisa PROGRAM
@@ -124,7 +151,9 @@ while True:
             else:
                 try:#inicia la ejecucion, en caso de error es porque no logra indexar el turnoff
                    for linee in program[program.index("BEGINNING-OF-EXECUTION"):program.index("turnoff")]:
-                       archivo_ejecucion(linee)
+                       turnoff = archivo_ejecucion(linee)
+                       if turnoff == -1:
+                         break;
                    karel.up()
                    a = input("presione cualquier tecla para volver a parametros de lanzamiento")
                 except:

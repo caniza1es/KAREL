@@ -1,20 +1,10 @@
 BEGINNING-OF-PROGRAM
-DEFINE-NEW-INSTRUCTION turnright AS
-turnleft;
-turnleft;
-turnleft;
-END;
-DEFINE-NEW-INSTRUCTION movepick AS
-turnright;
+BEGINNING-OF-EXECUTION
 move;
 pickbeeper;
-END;
-BEGINNING-OF-EXECUTION
-movepick;
-move;
 putbeeper;
 move;
-putbeeper;
+move;
 turnoff
 END-OF-EXECUTION
 END-OF-PROGRAM
