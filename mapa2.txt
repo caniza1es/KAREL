@@ -1,0 +1,2 @@
+paredVertical 5 13 13
+karel 15 15

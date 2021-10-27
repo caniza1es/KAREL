@@ -73,24 +73,23 @@ while contadorLi != 31:
   karel.up()
   karel.setx(karel.xcor()+30)
   contadorLi+=1
-
-paredes = []
-beepers = []
 while True:
- try: 
+ paredes = []
+ beepers = []
+ while True:
+  try: 
    print("mapa:")
    pInicial = lector.parametros(paredes,beepers,karel)
    print("\n")
    break;
- except:
+  except:
    print("error al cargar mapa")
    print("\n")
-mochila = pInicial[2]
-posxinicial = pInicial[0]
-posyinicial = pInicial[1]
-
-#se empieza a leer el programa
-while True:
+ mochila = pInicial[2]
+ posxinicial = pInicial[0]
+ posyinicial = pInicial[1]
+ #se empieza a leer el programa
+ while True:
   mochila = pInicial[2]
   lector.coordenadas(posxinicial,posyinicial,karel)
   karel.seth(0)
@@ -99,7 +98,6 @@ while True:
   karel.down()
   for i in beepers:
       lector.coordenadas(i.x, i.y, i.turtlee)
-         
   try:
         print("codigo")
         program = lector.archivo_a_lista()
@@ -126,6 +124,12 @@ while True:
             print("error en EXECUTION")
   except:
     print("saliendo..")
-    exit()
+    for i in paredes:
+      i.turtlee.ht()
+      del i
+    for i in beepers:
+      i.turtlee.ht()
+      del i
+    break;
         
 turtle.done()
