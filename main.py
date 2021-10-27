@@ -21,6 +21,40 @@ def hacerLinea(grid,numlinea,modo):
    grid.sety(-450)
    grid.write(numlinea)
    grid.sety(450)
+
+#funcion que ejecuta las intrucciones
+def archivo_ejecucion(instruccion):
+    if instruccion == "move;":
+        karel.forward(30)
+        for i in paredes:
+          if  round(karel.xcor()) == round(i.turtlee.xcor()) and round(karel.ycor()) == round(i.turtlee.ycor()):
+            print("karel ha chocado")
+            return -1
+    elif instruccion == "turnleft;":
+        karel.left(90)
+    elif instruccion in definiciones:
+        for nLine in program[definiciones[definiciones.index(instruccion)+1]:definiciones[definiciones.index(instruccion)+2]]:
+            archivo_ejecucion(nLine)
+    elif instruccion == "pickbeeper;":
+      for i in beepers:
+        if round(karel.xcor()) == round(i.turtlee.xcor()) and round(karel.ycor()) == round(i.turtlee.ycor()):
+          global mochila
+          mochila += 1
+          lector.coordenadas(-1, -1, i.turtlee)
+          return
+      print("no hay beepers que recoger")
+      return -1
+    elif instruccion == "putbeeper;":
+      if mochila>0:
+         for i in beepers:
+             if i.turtlee.xcor() == -480:
+                 i.turtlee.goto(karel.xcor(),karel.ycor())
+                 mochila-=1
+                 break;
+      else:
+        print("No tiene beepers para poner.")
+        return -1
+
 #Hacer lineas horizontales
 contadorLi = 0
 while contadorLi != 31:
@@ -40,106 +74,36 @@ while contadorLi != 31:
   karel.setx(karel.xcor()+30)
   contadorLi+=1
 
-#funcion para ubicar a objetos con coordenadas del plano cartesiano
-def coordenadas(x,y,ka):
-  ka.goto(-450+(x*30),-450+(y*30))
-
-karel.up()
 paredes = []
-paredesVerticales = lector.pedirParedesV()
-for i in range(paredesVerticales):
-  x = int(input("corx: "))
-  y = int(input("cory: "))
-  size = int(input("tamaño: "))
-  for unidad in range(size):
-    pared = lector.Beepers(x,y)
-    pared.turtlee.color("black")
-    paredes.append(pared)
-    coordenadas(x,y,pared.turtlee)
-    y+=1
-
-paredesHorizontales = lector.pedirParedesH()
-for i in range(paredesHorizontales):
-  x = int(input("corx: "))
-  y = int(input("cory: "))
-  size = int(input("tamaño: "))
-  for unidad in range(size):
-    pared = lector.Beepers(x,y)
-    pared.turtlee.color("black")
-    paredes.append(pared)
-    coordenadas(x,y,pared.turtlee)
-    x+=1
 beepers = []
-numeroBeepers = lector.pedirBeepers()
-for i in range(numeroBeepers):
-  x = int(input("corx: "))
-  y = int(input("cory: "))
-  beep = lector.Beepers(x,y)
-  beep.turtlee.speed(3)
-  beepers.append(beep)
-  coordenadas(x,y,beepers[i].turtlee)
-  
-mochila = int(input("beepers en mochila: "))
-temp = mochila
-for i in range(mochila):
-  beep = lector.Beepers(-1, -1)
-  beep.turtlee.speed(3)
-  coordenadas(beep.x, beep.y, beep.turtlee)
-  beepers.append(beep)
-
-
-
-#funcion que ejecuta las intrucciones
-def archivo_ejecucion(instruccion):
-    if instruccion == "move;":
-        karel.forward(30)
-        for i in paredes:
-          if  int(karel.xcor()) == i.turtlee.xcor() and int(karel.ycor()) == i.turtlee.ycor():
-            print("karel ha chocado")
-            return -1
-    elif instruccion == "turnleft;":
-        karel.left(90)
-    elif instruccion in definiciones:
-        for nLine in program[definiciones[definiciones.index(instruccion)+1]:definiciones[definiciones.index(instruccion)+2]]:
-            archivo_ejecucion(nLine)
-    elif instruccion == "pickbeeper;":
-      for i in beepers:
-        if int(karel.xcor()) == i.turtlee.xcor() and int(karel.ycor()) == i.turtlee.ycor():
-          global mochila
-          mochila += 1
-          coordenadas(-1, -1, i.turtlee)
-          return
-        print("no hay beepers que recoger")
-        return -1
-    elif instruccion == "putbeeper;":
-      if mochila>0:
-         for i in beepers:
-             if i.turtlee.xcor() == -480:
-                 i.turtlee.goto(karel.xcor(),karel.ycor())
-                 mochila-=1
-                 break;
-      else:
-        print("No tiene beepers para poner.")
-        return -1
-
-
-posxinicial = int(input("posicion x inicial: "))
-posyinicial = int(input("pos y inicial: "))
-
+while True:
+ try: 
+   print("mapa:")
+   pInicial = lector.parametros(paredes,beepers,karel)
+   print("\n")
+   break;
+ except:
+   print("error al cargar mapa")
+   print("\n")
+mochila = pInicial[2]
+posxinicial = pInicial[0]
+posyinicial = pInicial[1]
 
 #se empieza a leer el programa
 while True:
-  mochila = temp
-  coordenadas(posxinicial,posyinicial,karel)
+  mochila = pInicial[2]
+  lector.coordenadas(posxinicial,posyinicial,karel)
   karel.seth(0)
   karel.speed(1)
   karel.color("red")
   karel.down()
   for i in beepers:
-      coordenadas(i.x, i.y, i.turtlee)
+      lector.coordenadas(i.x, i.y, i.turtlee)
          
   try:
+        print("codigo")
         program = lector.archivo_a_lista()
+        print("\n")
         #se revisa PROGRAM
         if program[0] != "BEGINNING-OF-PROGRAM" or program[-1] != "END-OF-PROGRAM":
          print("error en programa")
@@ -161,8 +125,7 @@ while True:
         except:
             print("error en EXECUTION")
   except:
-        print("No se encontro el archivo-saliendo.")
-        exit()
-        break
+    print("saliendo..")
+    exit()
         
 turtle.done()
