@@ -1,10 +1,11 @@
 import turtle
 class Objetos:
-  def __init__(self,x,y):
+  def __init__(self,x,y,color):
     self.x = x
     self.y = y
     self.turtlee = turtle.Turtle()
     self.turtlee.shape("square")
+    self.turtlee.color(color)
     self.turtlee.up()
 
 #funcion para ubicar a objetos con coordenadas del plano cartesiano
@@ -20,8 +21,10 @@ def parametros(pa_lista,be_lista,ka):
       x = int(par[1])
       y = int(par[2])
       for unidad in range(int(par[3])):
-        obj = Objetos(x,y)
-        obj.turtlee.color("black")
+        try:
+          obj = Objetos(x,y,par[4])
+        except:
+          obj = Objetos(x,y,"black")
         obj.turtlee.speed(0)
         pa_lista.append(obj)
         coordenadas(x,y,obj.turtlee)
@@ -32,16 +35,20 @@ def parametros(pa_lista,be_lista,ka):
     elif par[0] == "beeper":
       x = int(par[1])
       y = int(par[2])
-      beep = Objetos(x,y)
-      beep.turtlee.color("green")
+      try:
+        beep = Objetos(x,y,par[3])
+      except:
+        beep = Objetos(x,y,"green")
       beep.turtlee.speed(0)
       be_lista.append(beep)
       coordenadas(x,y,beep.turtlee)
     elif par[0] == "mochila":
       mochilaa = int(par[1])
       for i in range(mochilaa):
-        beep = Objetos(-1,-1)
-        beep.turtlee.color("green")
+        try:
+          beep = Objetos(-1,-1,par[2])
+        except:
+          beep = Objetos(-1,-1,"green")
         be_lista.append(beep)
         coordenadas(-1,-1,beep.turtlee)
     elif par[0] == "karel":
