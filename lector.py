@@ -53,6 +53,10 @@ def parametros(pa_lista,be_lista,ka):
         be_lista.append(beep)
         coordenadas(-1,-1,beep.turtlee)
     elif par[0] == "karel":
+      try:
+        ka.color(par[3])
+      except:
+        ka.color("red")
       coordenadas(int(par[1]),int(par[2]),ka)
       return (int(par[1]),int(par[2]),mochilaa)
     else:

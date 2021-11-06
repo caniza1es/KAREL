@@ -52,7 +52,7 @@ def archivo_ejecucion(instruc):
              if i.turtlee.xcor() == -480:
                  i.turtlee.goto(karel.xcor(),karel.ycor())
                  mochila-=1
-                 break;
+                 break
       else:
         print("No tiene beepers para poner.")
         return -1
@@ -74,7 +74,7 @@ def ejecutar(programa):
     print(i)
     t = archivo_ejecucion(i)
     if t == -1:
-       break;
+       return t
 def conditional(mode):
    head = karel.heading()
    y = 0
@@ -144,6 +144,12 @@ def conditional(mode):
      if head == 270:
        return False
      return True
+   elif mode == "beepers-near":
+     for i in beepers:
+        if round(karel.xcor()) == round(i.turtlee.xcor()) and round(karel.ycor()) == round(i.turtlee.ycor()):
+            return True
+        else:
+          return False
    if mode.split("-")[2] == "blocked":
      for i in paredes:
        if  round(karel.xcor()+x) == round(i.turtlee.xcor()) and round(karel.ycor()+y) == round(i.turtlee.ycor()):
@@ -168,7 +174,9 @@ def anidar(inst,funcs):
   if inst.split()[0] == "ITERATE":
     iterator = int(inst.split()[1])
     for j in range(iterator):
-      ejecutar(indices[inicio[0]:final[-1]])
+      t = ejecutar(indices[inicio[0]:final[-1]])
+      if t == -1:
+        break
   elif inst.split()[0] == "IF":
     if conditional(inst.split()[1]):
       ejecutar(indices[inicio[0]:final[-1]])
@@ -204,7 +212,7 @@ while True:
    print("mapa:")
    pInicial = lector.parametros(paredes,beepers,karel)
    print("\n")
-   break;
+   break
   except:
    print("error al cargar mapa")
    print("\n")
@@ -217,7 +225,6 @@ while True:
   lector.coordenadas(posxinicial,posyinicial,karel)
   karel.seth(0)
   karel.speed(1)
-  karel.color("red")
   karel.down()
   for i in beepers:
       lector.coordenadas(i.x, i.y, i.turtlee)
@@ -251,6 +258,6 @@ while True:
     for i in beepers:
       i.turtlee.ht()
       del i
-    break;
+    break
         
 turtle.done()

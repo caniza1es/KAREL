@@ -3,4 +3,4 @@ paredVertical 17 15 5 purple
 paredHorizont 14 14 4 purple
 paredHorizont 16 19 1 purple
 mochila 4 orange
-karel 15 15 cyan
+karel 15 15 
