@@ -39,21 +39,56 @@ putbeeper;   -toma un beeper de la mochila y lo pone en la posicion de karel, en
 4. Para indicar las instrucciones a leer, haga uso de las instrucciones nativas dentro de EXECUTION o llame una definicion con nombreinstruccion;
 5.Una vez se haya terminado de llamar todas las instrucciones para su codigo en EXECUTION, debe usar "turnoff"
 
-ITERADOR: ITERATE x times -itera x veces el bloque de instrucciones
-          bloque instrucciones
-          END
-          
-statements:
-front-is-blocked --- front-is-clear    beepers-in-bag  facing-north --- not-facing-north
-right...                                                     -east...
-left...                                                      -west...
-                                                             -south...
+CODIGO EJEMPLO
 
-CONDICIONAL: IF statement          -en caso de que el statement se cumpla, se ejecuta el bloque de instrucciones
-             bloque instrucciones
-             END
+                                    BEGINNING-OF-PROGRAM
+                                    DEFINE-NEW-INSTRUCTION turnright AS
+                                    turnleft;
+                                    turnleft;
+                                    turnleft;
+                                    END;
+                                    DEFINE-NEW-INSTRUCTION square AS
+                                    ITERATE 4 TIMES
+                                    turnright;
+                                    move;
+                                    END
+                                    END;
+                                    BEGINNING-OF-EXECUTION
+                                    square
+                                    move;
+                                    turnoff
+                                    END-OF-EXECUTION
+                                    END-OF-PROGRAM
+
+
+ITERADOR: 
+
+                                    ITERATE x times 
+                                    bloque instrucciones
+                                    END
+          
+-itera x veces el bloque de instrucciones
+
+statements:
+
+front-is-blocked --- front-is-clear    beepers-in-bag   facing-north --- not-facing-north
+right...                                                      -east...
+left...                                                       -west...
+                                                              -south...
+
+CONDICIONAL:
+
+                                    IF statement          
+                                    bloque instrucciones
+                                    END
        
-BUCLE CONDICIONADO: WHILE statement      -mientras que el statement se cumpla, el bloque de instrucciones se ejecuta
-                    bloque instrucciones
-                    end
+-en caso de que el statement se cumpla, se ejecuta el bloque de instrucciones
+
+BUCLE CONDICIONADO: 
+
+                                   WHILE statement      
+                                   bloque instrucciones
+                                   end
+                                   
+-mientras que el statement se cumpla, el bloque de instrucciones se ejecuta
                                                              
