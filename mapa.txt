@@ -1,12 +1,6 @@
-paredVertical 12 17 7 red
-paredVertical 18 17 7 yellow
-paredHorizont 12 16 7 purple
-paredHorizont 12 24 7
-beeper 13 23 blue
-beeper 13 17 yellow
-beeper 17 23 cyan
-beeper 17 17 pink
-mochila 1 orange
-karel 13 17 green
-
-
+paredVertical 14 15 5 purple
+paredVertical 17 15 5 purple
+paredHorizont 14 14 4 purple
+paredHorizont 16 19 1 purple
+mochila 4 orange
+karel 15 15 cyan

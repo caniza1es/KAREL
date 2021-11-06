@@ -1,11 +1,21 @@
 BEGINNING-OF-PROGRAM
 BEGINNING-OF-EXECUTION
-pickbeeper;
-move;
 putbeeper;
+ITERATE 3 TIMES
+WHILE not-facing-south
+IF front-is-clear
 move;
+turnleft;
+END
+END
+turnleft;
 putbeeper;
+END
+IF left-is-clear
+turnleft;
 move;
+move;
+END
 turnoff
 END-OF-EXECUTION
 END-OF-PROGRAM

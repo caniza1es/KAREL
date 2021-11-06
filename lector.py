@@ -49,6 +49,7 @@ def parametros(pa_lista,be_lista,ka):
           beep = Objetos(-1,-1,par[2])
         except:
           beep = Objetos(-1,-1,"green")
+        beep.turtlee.speed(0)
         be_lista.append(beep)
         coordenadas(-1,-1,beep.turtlee)
     elif par[0] == "karel":
@@ -78,6 +79,13 @@ def archivo_a_lista():
 		programa.append(line.strip())
 	archivo.close()
 	return programa
+
+def archivo_a_indices(programa):
+  indices = []
+  for i in range(len(programa)):
+    msn = programa[i] + " " + "{0}".format(i)
+    indices.append(msn)
+  return indices
 
 
 def archivo_definiciones(programa):
