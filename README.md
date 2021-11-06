@@ -54,7 +54,7 @@ CODIGO EJEMPLO
                                     END
                                     END;
                                     BEGINNING-OF-EXECUTION
-                                    square
+                                    square;
                                     move;
                                     turnoff
                                     END-OF-EXECUTION
