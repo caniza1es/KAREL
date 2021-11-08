@@ -62,18 +62,6 @@ def parametros(pa_lista,be_lista,ka):
     else:
       return (15,15,mochilaa)
 
-  
-def pedirBeepers():
-    beepersN = int(input("Digite numero beepers: "))
-    return beepersN
-
-def pedirParedesV():
-    paredesV = int(input("numero paredes verticales: "))
-    return paredesV
-def pedirParedesH():
-    paredesH = int(input("numero paredes horizontales: "))
-    return paredesH
-
 def archivo_a_lista():
 	#convierte el archivo a una lista de strings sin espacios
 	nombre = input("digite nombre archivo(junto a extension): ")

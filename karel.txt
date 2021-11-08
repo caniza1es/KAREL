@@ -1,5 +1,10 @@
 BEGINNING-OF-PROGRAM
-BEGINNING-OF-EXECUTION
+DEFINE-NEW-INSTRUCTION turnright AS
+ITERATE 3 TIMES
+turnleft;
+END
+END;
+DEFINE-NEW-INSTRUCTION program AS
 putbeeper;
 ITERATE 3 TIMES
 WHILE not-facing-south
@@ -16,6 +21,22 @@ turnleft;
 move;
 move;
 END
+WHILE beeper-near
+pickbeeper;
+END
+ITERATE 2 TIMES
+turnright;
+move;
+move;
+move;
+END
+putbeeper;
+move;
+move;
+putbeeper;
+END;
+BEGINNING-OF-EXECUTION
+program;
 turnoff
 END-OF-EXECUTION
 END-OF-PROGRAM

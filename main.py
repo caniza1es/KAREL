@@ -9,6 +9,7 @@ turtle.setup(1000,1000)
 karel = turtle.Turtle()
 karel.speed(0)
 karel.sety(-450)
+turtle.tracer(0)
 
 #Funcion para lineas horizontales/Verticales
 def hacerLinea(grid,numlinea,modo):
@@ -144,16 +145,16 @@ def conditional(mode):
      if head == 270:
        return False
      return True
-   elif mode == "beepers-near":
+   elif mode == "beeper-near":
      for i in beepers:
         if round(karel.xcor()) == round(i.turtlee.xcor()) and round(karel.ycor()) == round(i.turtlee.ycor()):
             return True
-        else:
-          return False
+     return False
    if mode.split("-")[2] == "blocked":
      for i in paredes:
        if  round(karel.xcor()+x) == round(i.turtlee.xcor()) and round(karel.ycor()+y) == round(i.turtlee.ycor()):
          return True
+     return False
    elif mode.split("-")[2] == "clear":
      for i in paredes:
        if  round(karel.xcor()+x) == round(i.turtlee.xcor()) and round(karel.ycor()+y) == round(i.turtlee.ycor()):
@@ -204,28 +205,34 @@ while contadorLi != 31:
   karel.up()
   karel.setx(karel.xcor()+30)
   contadorLi+=1
+
+turtle.tracer(1)
 while True:
  paredes = []
  beepers = []
  while True:
   try: 
-   print("mapa:")
-   pInicial = lector.parametros(paredes,beepers,karel)
-   print("\n")
-   break
+    print("mapa:")
+    turtle.tracer(0)
+    pInicial = lector.parametros(paredes,beepers,karel)
+    turtle.tracer(1)
+    print("\n")
+    break
   except:
-   print("error al cargar mapa")
-   print("\n")
+    print("error al cargar mapa")
+    print("\n")
  mochila = pInicial[2]
  posxinicial = pInicial[0]
  posyinicial = pInicial[1]
  #se empieza a leer el programa
  while True:
   mochila = pInicial[2]
+  turtle.tracer(0)
   lector.coordenadas(posxinicial,posyinicial,karel)
   karel.seth(0)
   karel.speed(1)
   karel.down()
+  turtle.tracer(1)
   for i in beepers:
       lector.coordenadas(i.x, i.y, i.turtlee)
   try:
@@ -251,13 +258,15 @@ while True:
         except:
             print("error en EXECUTION")
   except:
-    print("saliendo..")
+    print("volviendo a mapa..")
+    turtle.tracer(0)
     for i in paredes:
       i.turtlee.ht()
       del i
     for i in beepers:
       i.turtlee.ht()
       del i
+    turtle.tracer(1)
     break
         
 turtle.done()

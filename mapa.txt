@@ -2,5 +2,7 @@ paredVertical 14 15 5 purple
 paredVertical 17 15 5 purple
 paredHorizont 14 14 4 purple
 paredHorizont 16 19 1 purple
+beeper 15 20 pink
+beeper 15 20 red
 mochila 4 orange
-karel 15 15 
+karel 15 15 green
