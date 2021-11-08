@@ -76,6 +76,7 @@ right...
 left...                                                       
                                                               
 beepers-in-bag
+
 beeper-near
 
 facing-north --- not-facing-north
