@@ -177,13 +177,17 @@ def anidar(inst,funcs):
     for j in range(iterator):
       t = ejecutar(indices[inicio[0]:final[-1]])
       if t == -1:
-        break
+        return t
   elif inst.split()[0] == "IF":
     if conditional(inst.split()[1]):
-      ejecutar(indices[inicio[0]:final[-1]])
+      t = ejecutar(indices[inicio[0]:final[-1]])
+      if t == -1:
+        return t
   elif inst.split()[0] == "WHILE":
     while conditional(inst.split()[1]):
-      ejecutar(indices[inicio[0]:final[-1]])
+      t = ejecutar(indices[inicio[0]:final[-1]])
+      if t == -1:
+        return t 
 
   return final[-1]-inicio[0]
 
@@ -250,7 +254,7 @@ while True:
                 "vuelve a pedir el archivo"
             else:
                 try:#inicia la ejecucion, en caso de error es porque no logra indexar el turnoff
-                   ejecutar(indices[program.index("BEGINNING-OF-EXECUTION")+1:program.index("turnoff")])
+                   turnoff = ejecutar(indices[program.index("BEGINNING-OF-EXECUTION")+1:program.index("turnoff")])
                    karel.up()
                    a = input("presione cualquier tecla para volver a parametros de lanzamiento")
                 except:
