@@ -63,7 +63,7 @@ CODIGO EJEMPLO
 
 ITERADOR: 
 
-                                    ITERATE x times 
+                                    ITERATE x TIMES
                                     bloque instrucciones
                                     END
           
