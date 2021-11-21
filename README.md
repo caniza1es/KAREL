@@ -98,7 +98,7 @@ BUCLE CONDICIONADO:
 
                                    WHILE statement      
                                    bloque instrucciones
-                                   end
+                                   END
                                    
 -mientras que el statement se cumpla, el bloque de instrucciones se ejecuta
                                                              
